@@ -13,7 +13,7 @@ Same logic as the Pine indicator (Volume Profile + volume flow + EMA trend), sen
 4. Deploy. You get a "bot started" message. Commands: /status, /stats
 
 ## Optional variables (defaults)
-SYMBOL=BTCUSDT, MAX_SL_PER_DAY=2 (0=off), TP1_CLOSE_PCT=50, RR1=1, RR2=2, MOVE_SL_TO_BE=1,
+SYMBOL=BTCUSDT, MAX_SL_PER_DAY=0 (0=off, every signal is sent), TP1_CLOSE_PCT=50, RR1=1, RR2=2, MOVE_SL_TO_BE=1,
 COOLDOWN_BARS=3, COST_PCT=0.05 (fees+slippage in R stats), USE_TREND=1, FLOW_THR=0.08
 
 ## Notes
@@ -21,3 +21,11 @@ COOLDOWN_BARS=3, COST_PCT=0.05 (fees+slippage in R stats), USE_TREND=1, FLOW_THR
 - Stats in /stats are forward-only (since bot start) - judge it after 30+ trades, not before.
 - Small differences vs TradingView are normal (different exchange feed, 1m tracking).
 - Not financial advice. Risk max 1% per trade.
+
+## v1.1
+- No daily SL limit by default (set MAX_SL_PER_DAY=2 to bring it back).
+- Every signal shows Volume Flow, nearby/inside HTF Order Blocks (1H + 4H, env OB_TFS) and a confluence grade (A+/A/B/C).
+- Nothing is silently dropped: if a signal is not taken (trade already active / cooldown) you get a "Signal skipped" note.
+- Failed Telegram sends are queued and retried, delayed ones are marked.
+- Heartbeat "Bot alive" every 6h (HEARTBEAT_HOURS, 0 = off).
+- Commands: /status (price, flow, trade, OBs), /ob, /stats
